@@ -1,0 +1,287 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Seeds of Change Organic Red Rice",
+      "category": "Fresh Fruit",
+      "brand": "NestFood",
+      "price": 28.85,
+      "oldPrice": 32.8,
+      "discountPercent": 13,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 24,
+      "sku": "NF-001",
+      "description": "High quality organic red rice with rich nutrients and natural taste.",
+      "image": "/1.png"
+    },
+    {
+      "id": "2",
+      "name": "All Natural Style Chicken Meatballs",
+      "category": "Meats",
+      "brand": "NestFood",
+      "price": 52.85,
+      "oldPrice": 32.8,
+      "discountPercent": 0,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 18,
+      "sku": "NF-002",
+      "description": "Juicy and delicious chicken meatballs made with natural ingredients.",
+      "image": "/2.png"
+    },
+    {
+      "id": "3",
+      "name": "Angie’s Sweet & Salty Kettle Corn",
+      "category": "Snacks",
+      "brand": "Country Crock",
+      "price": 48.85,
+      "oldPrice": 52.8,
+      "discountPercent": 0,
+      "badge": "New",
+      "rating": 4,
+      "stock": 30,
+      "sku": "CC-003",
+      "description": "Crunchy kettle corn with a perfect mix of sweet and salty flavor.",
+      "image": "/3.png"
+    },
+    {
+      "id": "4",
+      "name": "Foster Farms Takeout Crispy Classic",
+      "category": "Snacks",
+      "brand": "Country Crock",
+      "price": 17.85,
+      "oldPrice": 19.8,
+      "discountPercent": 10,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 16,
+      "sku": "CC-004",
+      "description": "Crispy classic takeout snack with bold taste and crunchy texture.",
+      "image": "/4.png"
+    },
+    {
+      "id": "5",
+      "name": "Blue Almonds Lightly Salted Vegetables",
+      "category": "Fresh Fruit",
+      "brand": "Country Crock",
+      "price": 23.85,
+      "oldPrice": 25.8,
+      "discountPercent": 8,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 15,
+      "sku": "CC-005",
+      "description": "Fresh and lightly salted vegetables with balanced flavor.",
+      "image": "/5.png"
+    },
+    {
+      "id": "6",
+      "name": "Chobani Complete Vanilla Greek Yogurt",
+      "category": "Dairy",
+      "brand": "Country Crock",
+      "price": 54.85,
+      "oldPrice": 58.8,
+      "discountPercent": 2,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 12,
+      "sku": "CC-006",
+      "description": "Creamy vanilla Greek yogurt with rich protein and smooth texture.",
+      "image": "/6.png"
+    },
+    {
+      "id": "7",
+      "name": "Haagen Caramel Cone Ice Cream Boxed",
+      "category": "Dessert",
+      "brand": "Hamburger Hel",
+      "price": 22.85,
+      "oldPrice": 24.8,
+      "discountPercent": 8,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 10,
+      "sku": "HH-007",
+      "description": "Premium caramel cone ice cream with creamy rich taste.",
+      "image": "/7.png"
+    },
+    {
+      "id": "8",
+      "name": "Gorton’s Beer Battered Fish Fillets",
+      "category": "Seafood",
+      "brand": "Hamburger Hel",
+      "price": 23.85,
+      "oldPrice": 25.8,
+      "discountPercent": 6,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 20,
+      "sku": "HH-008",
+      "description": "Crispy fish fillets coated with beer batter for extra taste.",
+      "image": "/8.png"
+    },
+    {
+      "id": "9",
+      "name": "Encore Seafoods Stuffed Alaskan",
+      "category": "Seafood",
+      "brand": "Hamburger Hel",
+      "price": 35.85,
+      "oldPrice": 37.8,
+      "discountPercent": 3,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 11,
+      "sku": "HH-009",
+      "description": "Stuffed Alaskan seafood product with premium quality and flavor.",
+      "image": "/5.png"
+    },
+    {
+      "id": "10",
+      "name": "Canada Dry Ginger Ale - 2L Bottle",
+      "category": "Drinks",
+      "brand": "Hamburger Hel",
+      "price": 32.85,
+      "oldPrice": 35.8,
+      "discountPercent": 0,
+      "badge": "",
+      "rating": 4,
+      "stock": 22,
+      "sku": "HH-010",
+      "description": "Refreshing ginger ale drink in a large family bottle.",
+      "image": "/6.png"
+    },
+    {
+      "id": "11",
+      "name": "Extra Virgin Olive Oil",
+      "category": "Baking Material",
+      "brand": "Totino’s Pizza",
+      "price": 58,
+      "oldPrice": 60,
+      "discountPercent": 0,
+      "badge": "",
+      "rating": 4,
+      "stock": 13,
+      "sku": "TP-011",
+      "description": "Pure extra virgin olive oil ideal for cooking and healthy meals.",
+      "image": "/7.png"
+    },
+    {
+      "id": "12",
+      "name": "Frozen Vegetables Broccoli",
+      "category": "Vegetables",
+      "brand": "Totino’s Pizza",
+      "price": 71,
+      "oldPrice": 75,
+      "discountPercent": 0,
+      "badge": "",
+      "rating": 4,
+      "stock": 14,
+      "sku": "TP-012",
+      "description": "Frozen broccoli vegetables packed for freshness and convenience.",
+      "image": "/8.png"
+    },
+    {
+      "id": "13",
+      "name": "Frozen Fruit Strawberry",
+      "category": "Fresh Fruit",
+      "brand": "NestFood",
+      "price": 71,
+      "oldPrice": 90,
+      "discountPercent": 21,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 17,
+      "sku": "NF-013",
+      "description": "Frozen strawberries suitable for smoothies, desserts, and breakfast.",
+      "image": "/9.png"
+    },
+    {
+      "id": "14",
+      "name": "Pre-portioned Low-fat Ice Cream Yogurt",
+      "category": "Dessert",
+      "brand": "NestFood",
+      "price": 71,
+      "oldPrice": 90,
+      "discountPercent": 21,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 9,
+      "sku": "NF-014",
+      "description": "Low-fat ice cream yogurt in easy pre-portioned packs.",
+      "image": "/10.png"
+    },
+    {
+      "id": "15",
+      "name": "Dried Fruit: Apricots, Figs, Prunes",
+      "category": "Baking Material",
+      "brand": "NestFood",
+      "price": 71,
+      "oldPrice": 90,
+      "discountPercent": 27,
+      "badge": "Hot",
+      "rating": 4,
+      "stock": 19,
+      "sku": "NF-015",
+      "description": "Healthy dried fruits selection including apricots, figs, and prunes.",
+      "image": "/10.png"
+    }
+  ],
+  "cart": [
+    {
+      "id": "f7fa",
+      "productId": "3",
+      "quantity": 1
+    },
+    {
+      "id": "5fbc",
+      "productId": "5",
+      "quantity": 1
+    },
+    {
+      "id": "563b",
+      "productId": "1",
+      "quantity": 1
+    }
+  ],
+  "wishlist": [
+    {
+      "id": "1",
+      "productId": 1
+    },
+    {
+      "id": "2",
+      "productId": 6
+    },
+    {
+      "id": "3",
+      "productId": 14
+    }
+  ],
+  "reviews": [
+    {
+      "id": "1",
+      "productId": 2,
+      "user": "Sara",
+      "rating": 5,
+      "comment": "Very tasty and fresh product.",
+      "date": "2026-03-01"
+    },
+    {
+      "id": "2",
+      "productId": 2,
+      "user": "Amir",
+      "rating": 4,
+      "comment": "Good quality and fast delivery.",
+      "date": "2026-03-02"
+    },
+    {
+      "id": "3",
+      "productId": 8,
+      "user": "Neda",
+      "rating": 5,
+      "comment": "Crispy and delicious, I really liked it.",
+      "date": "2026-03-04"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
