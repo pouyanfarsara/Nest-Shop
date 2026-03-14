@@ -25,9 +25,9 @@ This project demonstrates practical frontend development skills including respon
 
 - **Next.js**
 - **React**
-- **JavaScript / TypeScript**  
-- **CSS / Tailwind CSS** *(if used)*
-- **React Icons / UI libraries** *(if used)*
+- **JavaScript** 
+- **CSS / Tailwind CSS**
+- **React Icons / UI libraries** 
 
 ## Project Structure
 
