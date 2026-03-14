@@ -1,41 +1,39 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Nest Shop
 
-## Getting Started
+A modern and responsive e-commerce web application built with **Next.js** and **React**, focused on performance, clean UI, and smooth user experience.
 
-First, run the development server:
+## Overview
+
+Nest Shop is a frontend-focused online store project designed to deliver a fast, scalable, and user-friendly shopping experience. The application is built with modern web technologies and follows component-based architecture for maintainability and future scalability.
+
+This project demonstrates practical frontend development skills including responsive design, reusable components, routing, state-driven UI, and production-ready project structure.
+
+## Features
+
+- Modern and responsive UI
+- Built with Next.js App Router
+- Component-based architecture
+- Optimized performance and fast page loading
+- Clean and maintainable code structure
+- Product listing interface
+- Product detail pages
+- Shopping cart UI
+- Mobile-friendly design
+- Scalable folder structure for future development
+
+## Tech Stack
+
+- **Next.js**
+- **React**
+- **JavaScript / TypeScript**  
+- **CSS / Tailwind CSS** *(if used)*
+- **React Icons / UI libraries** *(if used)*
+
+## Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# Nest-Shop
-Eccomerce web with Next.js
->>>>>>> bac4cad973db06757f09fe82fd81c33498eb9750
+app/
+components/
+public/
+styles/
+utils/
