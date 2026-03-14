@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Footer from "../components/layout/Footer";
 import ShopHeader from "../components/layout/shopheader";
 import { ChevronDown } from "lucide-react";
+import productsData from "@/data/products.json";
 
 const suggestedProducts = [
   {
@@ -47,42 +48,46 @@ export default function CartPage() {
   const [coupon, setCoupon] = useState("");
 
   useEffect(() => {
-    Promise.all([
-      fetch("http://localhost:3001/cart").then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch cart");
-        return res.json();
-      }),
-      fetch("http://localhost:3001/products").then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch products");
-        return res.json();
-      }),
-    ])
-      .then(([cartData, productsData]) => {
-        const fullCartItems = cartData.map((cartItem) => {
-          const product = productsData.find(
-            (product) => product.id === cartItem.productId
-          );
+    try {
+      const allProducts = productsData.products || productsData;
+      const storedCart = localStorage.getItem("cart");
+      const cart = storedCart ? JSON.parse(storedCart) : [];
 
-          return {
-            id: cartItem.id,
-            productId: cartItem.productId,
-            quantity: cartItem.quantity,
-            name: product?.name || "",
-            image: product?.image || "",
-            price: product?.price || 0,
-            oldPrice: product?.oldPrice || 0,
-          };
-        });
+      const fullCartItems = cart.map((cartItem, index) => {
+        const product = allProducts.find(
+          (product) => product.id === cartItem.productId
+        );
 
-        setCartItems(fullCartItems);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("cart fetch error:", err);
-        setError("مشکلی در دریافت سبد خرید پیش آمده");
-        setLoading(false);
+        return {
+          id: cartItem.id || `${cartItem.productId}-${index}`,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+          name: product?.name || "",
+          image: product?.image || "",
+          price: product?.price || 0,
+          oldPrice: product?.oldPrice || 0,
+        };
       });
+
+      setCartItems(fullCartItems);
+    } catch (err) {
+      console.log("cart load error:", err);
+      setError("مشکلی در دریافت سبد خرید پیش آمده");
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  const updateLocalCart = (updatedItems) => {
+    setCartItems(updatedItems);
+
+    const localCart = updatedItems.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+    }));
+
+    localStorage.setItem("cart", JSON.stringify(localCart));
+  };
 
   const subtotal = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -91,66 +96,25 @@ export default function CartPage() {
   const shipping = subtotal > 50 ? 0 : 10;
   const total = subtotal + shipping;
 
-  const increaseQty = async (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    if (!item) return;
-
-    try {
-      await fetch(`http://localhost:3001/cart/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          quantity: item.quantity + 1,
-        }),
-      });
-
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } catch (error) {
-      console.log("increase error:", error);
-    }
+  const increaseQty = (id) => {
+    const updatedItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    updateLocalCart(updatedItems);
   };
 
-  const decreaseQty = async (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    if (!item || item.quantity === 1) return;
-
-    try {
-      await fetch(`http://localhost:3001/cart/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          quantity: item.quantity - 1,
-        }),
-      });
-
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-      );
-    } catch (error) {
-      console.log("decrease error:", error);
-    }
+  const decreaseQty = (id) => {
+    const updatedItems = cartItems.map((item) =>
+      item.id === id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+    updateLocalCart(updatedItems);
   };
 
-  const removeItem = async (id) => {
-    try {
-      await fetch(`http://localhost:3001/cart/${id}`, {
-        method: "DELETE",
-      });
-
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
-    } catch (error) {
-      console.log("remove error:", error);
-    }
+  const removeItem = (id) => {
+    const updatedItems = cartItems.filter((item) => item.id !== id);
+    updateLocalCart(updatedItems);
   };
 
   const handleApplyCoupon = () => {
@@ -512,4 +476,4 @@ export default function CartPage() {
       </div>
     </>
   );
-} 
+}
