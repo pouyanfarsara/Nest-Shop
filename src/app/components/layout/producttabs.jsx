@@ -2,9 +2,10 @@
 
 import Button from "@/app/ui/components/Button/button";
 import { ShoppingCart, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProductCardSkeleton from "./Skeletonloading";
 import Link from "next/link";
+import productsData from "@/data/products.json";
 
 export default function ProductTabs() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -13,55 +14,36 @@ export default function ProductTabs() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/products")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("products:", data);
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("fetch error:", err);
-        setError("مشکلی در دریافت محصولات پیش آمده");
-        setLoading(false);
-      });
+    try {
+      setProducts(productsData);
+    } catch (err) {
+      console.log("products load error:", err);
+      setError("مشکلی در دریافت محصولات پیش آمده");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const addToCart = async (product) => {
+  const addToCart = (product) => {
     try {
-      const res = await fetch("http://localhost:3001/cart");
-      const cart = await res.json();
+      const storedCart = localStorage.getItem("cart");
+      const cart = storedCart ? JSON.parse(storedCart) : [];
 
       const existingItem = cart.find((item) => item.productId === product.id);
 
+      let updatedCart = [];
+
       if (existingItem) {
-        await fetch(`http://localhost:3001/cart/${existingItem.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            quantity: existingItem.quantity + 1,
-          }),
-        });
+        updatedCart = cart.map((item) =>
+          item.productId === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       } else {
-        await fetch("http://localhost:3001/cart", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productId: product.id,
-            quantity: 1,
-          }),
-        });
+        updatedCart = [...cart, { productId: product.id, quantity: 1 }];
       }
 
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       alert("محصول به سبد خرید اضافه شد");
     } catch (error) {
       console.log("add to cart error:", error);
@@ -69,20 +51,27 @@ export default function ProductTabs() {
     }
   };
 
-  const filteredProducts =
-    activeTab === "tab1"
-      ? products
-      : activeTab === "tab2"
-      ? products.filter((product) => product.category === "Baking Material")
-      : activeTab === "tab3"
-      ? products.filter((product) => product.category === "Fresh Fruit")
-      : activeTab === "tab4"
-      ? products.filter((product) => product.category === "Dairy")
-      : activeTab === "tab5"
-      ? products.filter((product) => product.category === "Meats")
-      : activeTab === "tab6"
-      ? products.filter((product) => product.category === "Seafood")
-      : products;
+  const filteredProducts = useMemo(() => {
+    if (activeTab === "tab1") return products;
+    if (activeTab === "tab2") {
+      return products.filter(
+        (product) => product.category === "Baking Material"
+      );
+    }
+    if (activeTab === "tab3") {
+      return products.filter((product) => product.category === "Fresh Fruit");
+    }
+    if (activeTab === "tab4") {
+      return products.filter((product) => product.category === "Dairy");
+    }
+    if (activeTab === "tab5") {
+      return products.filter((product) => product.category === "Meats");
+    }
+    if (activeTab === "tab6") {
+      return products.filter((product) => product.category === "Seafood");
+    }
+    return products;
+  }, [activeTab, products]);
 
   if (loading) {
     return (
