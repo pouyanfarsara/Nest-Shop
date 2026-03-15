@@ -16,7 +16,7 @@ export default function MainHeader() {
       <div className=" py-4 flex gap-15 items-center border-b  border-[#ECECEC]">
         <div className="logo">
           <Link href="/products">
-            <img src="logo.png" className="w-35" />
+            <img src="/logo.png" className="w-35" />
           </Link>
         </div>
         <div className="w-auto hidden lg:flex rounded-xs border-[#3BB77E] border justify-between pl-5 py-1 pr-1 ">
