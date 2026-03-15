@@ -15,7 +15,7 @@ export default function ProductTabs() {
 
   useEffect(() => {
     try {
-      setProducts(productsData);
+      setProducts(productsData.products || []);
     } catch (err) {
       console.log("products load error:", err);
       setError("مشکلی در دریافت محصولات پیش آمده");
@@ -29,18 +29,27 @@ export default function ProductTabs() {
       const storedCart = localStorage.getItem("cart");
       const cart = storedCart ? JSON.parse(storedCart) : [];
 
-      const existingItem = cart.find((item) => item.productId === product.id);
+      const existingItem = cart.find(
+        (item) => String(item.productId) === String(product.id)
+      );
 
       let updatedCart = [];
 
       if (existingItem) {
         updatedCart = cart.map((item) =>
-          item.productId === product.id
+          String(item.productId) === String(product.id)
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        updatedCart = [...cart, { productId: product.id, quantity: 1 }];
+        updatedCart = [
+          ...cart,
+          {
+            id: crypto.randomUUID(),
+            productId: String(product.id),
+            quantity: 1,
+          },
+        ];
       }
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));

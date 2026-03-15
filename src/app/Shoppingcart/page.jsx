@@ -49,18 +49,18 @@ export default function CartPage() {
 
   useEffect(() => {
     try {
-      const allProducts = productsData.products || productsData;
+      const allProducts = productsData.products || [];
       const storedCart = localStorage.getItem("cart");
       const cart = storedCart ? JSON.parse(storedCart) : [];
 
       const fullCartItems = cart.map((cartItem, index) => {
         const product = allProducts.find(
-          (product) => product.id === cartItem.productId
+          (product) => String(product.id) === String(cartItem.productId)
         );
 
         return {
           id: cartItem.id || `${cartItem.productId}-${index}`,
-          productId: cartItem.productId,
+          productId: String(cartItem.productId),
           quantity: cartItem.quantity,
           name: product?.name || "",
           image: product?.image || "",
@@ -82,7 +82,8 @@ export default function CartPage() {
     setCartItems(updatedItems);
 
     const localCart = updatedItems.map((item) => ({
-      productId: item.productId,
+      id: item.id,
+      productId: String(item.productId),
       quantity: item.quantity,
     }));
 
