@@ -1,39 +1,116 @@
-# Nest Shop
+# 🛒 Nest Shop
 
-A modern and responsive e-commerce web application built with **Next.js** and **React**, focused on performance, clean UI, and smooth user experience.
+A modern and responsive **ecommerce web application** built with **Next.js**, **React**, and **Tailwind CSS**.
+This project demonstrates a complete online shop UI with product listing, product details, and shopping cart functionality.
 
-## Overview
+---
 
-Nest Shop is a frontend-focused online store project designed to deliver a fast, scalable, and user-friendly shopping experience. The application is built with modern web technologies and follows component-based architecture for maintainability and future scalability.
+## 🚀 Live Demo
 
-This project demonstrates practical frontend development skills including responsive design, reusable components, routing, state-driven UI, and production-ready project structure.
+🔗 https://nest-shop.vercel.app
 
-## Features
+---
 
-- Modern and responsive UI
-- Built with Next.js App Router
-- Component-based architecture
-- Optimized performance and fast page loading
-- Clean and maintainable code structure
-- Product listing interface
-- Product detail pages
-- Shopping cart UI
-- Mobile-friendly design
-- Scalable folder structure for future development
+## 📸 Screenshots
 
-## Tech Stack
+### Home Page
+![Home](./screenshots/home.png)
 
-- **Next.js**
-- **React**
-- **JavaScript** 
-- **CSS / Tailwind CSS**
-- **React Icons / UI libraries** 
+### Products Page
+![Products](./screenshots/products.png)
 
-## Project Structure
+### Product Detail
+![Product Detail](./screenshots/product-detail.png)
+
+### Shopping Cart
+![Cart](./screenshots/cart.png)
+
+---
+
+## 🛠 Tech Stack
+
+* **Next.js (App Router)**
+* **React**
+* **Tailwind CSS**
+* **JavaScript (ES6+)**
+* **Local Storage**
+* **Vercel Deployment**
+
+---
+
+## ✨ Features
+
+* 🛍 Product listing with categories
+* 📦 Product detail pages
+* 🛒 Shopping cart with LocalStorage
+* ⭐ Product rating display
+* 📱 Fully responsive design
+* ⚡ Fast performance using Next.js
+
+---
+
+## 📂 Project Structure
+
+```text
+src
+ ├── app
+ │   ├── components
+ │   ├── ui
+ │   ├── products
+ │   └── cart
+ │
+ ├── data
+ │   └── products.json
+ │
+ └── styles
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository
 
 ```bash
-app/
-components/
-public/
-styles/
-utils/
+git clone https://github.com/pouyanfarsara/Nest-Shop.git
+```
+
+Go to the project directory
+
+```bash
+cd Nest-Shop
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Open in browser
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 🎯 Future Improvements
+
+* Add authentication system
+* Add backend API integration
+* Implement payment gateway
+* Add product filtering and search
+* Improve state management
+
+---
+
+
+GitHub
+https://github.com/pouyanfarsara
