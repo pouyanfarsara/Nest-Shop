@@ -17,10 +17,7 @@ This project demonstrates a complete online shop UI with product listing, produc
 ![Home](./screenshots/home.png)
 
 ### Products Page
-![Products](./screenshots/products.png)
-
-### Product Detail
-![Product Detail](./screenshots/product-detail.png)
+![Products](./screenshots/about.png)
 
 ### Shopping Cart
 ![Cart](./screenshots/cart.png)
