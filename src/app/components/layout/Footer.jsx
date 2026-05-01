@@ -133,7 +133,7 @@ export default function FooterTop() {
               <div className="mt-4 flex  gap-2">
                 <div className="relative cursor-pointer  w-[140px] h-[42px]">
                   <Image
-                    src="/appstore.png"
+                    src="/Appstore.png"
                     alt="App Store"
                     fill
                     className="object-contain"
