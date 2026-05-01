@@ -156,7 +156,7 @@ export default function FooterTop() {
             <div className="mt-3">
               <div className="relative w-[220px] h-[32px]">
                 <Image
-                  src="/payments.png"
+                  src="/payment.png"
                   alt="Payments"
                   fill
                   className="object-contain"
