@@ -1,7 +1,7 @@
 # 🛒 Nest Shop
 
-A modern and responsive **ecommerce web application** built with **Next.js**, **React**, and **Tailwind CSS**.
-This project demonstrates a complete online shop UI with product listing, product details, and shopping cart functionality.
+A modern and responsive **full-stack e-commerce web application** built with **Next.js (App Router)**, **React**, and **Tailwind CSS**.  
+This project showcases a complete shopping experience with authentication, product management, and cart functionality.
 
 ---
 
@@ -13,48 +13,73 @@ This project demonstrates a complete online shop UI with product listing, produc
 
 ## 📸 Screenshots
 
-### Home Page
+### 🏠 Home Page
 ![Home](./screenshots/home.png)
 
-### Products Page
+### 🛍 Products Page
 ![Products](./screenshots/about.png)
 
-### Shopping Cart
+### 🛒 Shopping Cart
 ![Cart](./screenshots/cart.png)
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Next.js (App Router)**
-* **React**
-* **Tailwind CSS**
-* **JavaScript (ES6+)**
-* **Local Storage**
-* **Vercel Deployment**
+- Next.js (App Router)
+- React
+- Tailwind CSS
+- NextAuth (Authentication)
+- Zod (Form Validation)
+- JavaScript (ES6+)
+- Local Storage (Cart)
+- Vercel (Deployment)
 
 ---
 
 ## ✨ Features
 
-* 🛍 Product listing with categories
-* 📦 Product detail pages
-* 🛒 Shopping cart with LocalStorage
-* ⭐ Product rating display
-* 📱 Fully responsive design
-* ⚡ Fast performance using Next.js
+- 🛍 Product listing with categories  
+- 📦 Dynamic product detail pages  
+- 🛒 Shopping cart with LocalStorage  
+- 🔐 Authentication system (Login/Register with NextAuth)  
+- ⭐ Product rating display  
+- 📱 Fully responsive design  
+- ⚡ Fast performance  
+
+---
+
+## 🔐 Authentication
+
+- Custom login/register UI  
+- Built with NextAuth Credentials Provider  
+- Session-based authentication  
+- Protected routes support  
+
+### Test Login
+
+```
+Email: sara@test.com
+Password: 123456
+```
 
 ---
 
 ## 📂 Project Structure
 
-```text
+```
 src
  ├── app
+ │   ├── api
+ │   │   └── auth
+ │   │       ├── register
+ │   │       └── [...nextauth]
+ │   │
  │   ├── components
  │   ├── ui
  │   ├── products
- │   └── cart
+ │   ├── cart
+ │   └── auth
  │
  ├── data
  │   └── products.json
@@ -66,33 +91,16 @@ src
 
 ## ⚙️ Installation
 
-Clone the repository
-
 ```bash
 git clone https://github.com/pouyanfarsara/Nest-Shop.git
-```
-
-Go to the project directory
-
-```bash
 cd Nest-Shop
-```
-
-Install dependencies
-
-```bash
 npm install
-```
-
-Run the development server
-
-```bash
 npm run dev
 ```
 
-Open in browser
+Open in browser:
 
-```text
+```
 http://localhost:3000
 ```
 
@@ -100,14 +108,22 @@ http://localhost:3000
 
 ## 🎯 Future Improvements
 
-* Add authentication system
-* Add backend API integration
-* Implement payment gateway
-* Add product filtering and search
-* Improve state management
+- Connect to real database (Prisma + PostgreSQL)  
+- Payment gateway integration  
+- Product search & filtering  
+- Wishlist system  
+- User dashboard  
+- Order management  
 
 ---
 
+## 📌 Author
 
-GitHub
-https://github.com/pouyanfarsara
+Sara Pouyanfar  
+https://github.com/pouyanfarsara  
+
+---
+
+## ⭐ If you like this project
+
+Give it a star on GitHub!
