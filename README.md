@@ -7,7 +7,7 @@ This project showcases a complete shopping experience with authentication, produ
 
 ## 🚀 Live Demo
 
-🔗 https://nest-shop.vercel.app
+🔗 [https://nest-shop.vercel.app](https://nest-shop-iota.vercel.app/)
 
 ---
 
