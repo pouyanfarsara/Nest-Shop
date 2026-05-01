@@ -1,10 +1,13 @@
 "use client";
+
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { z } from "zod";
 import FooterTop from "../components/layout/Footer";
 import FooterBottom from "../components/layout/FooterBottom";
 import ShopHeader from "../components/layout/shopheader";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Enter a valid email"),
@@ -27,6 +30,8 @@ const registerSchema = z
   });
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -85,46 +90,82 @@ export default function LoginPage() {
 
         if (!result.success) {
           const fieldErrors = {};
+
           result.error.issues.forEach((issue) => {
             const fieldName = issue.path[0];
             fieldErrors[fieldName] = issue.message;
           });
+
           setErrors(fieldErrors);
           setLoading(false);
           return;
         }
 
-        
+        const res = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
 
-       
-     
+        console.log("signIn result:", res);
+
+        if (!res || res.error) {
+          toast.error("Invalid email or password");
+          setLoading(false);
+          return;
+        }
 
         toast.success("Login successful");
-      } else {
-        const result = registerSchema.safeParse({
+        resetForm();
+
+        router.push("/products");
+        router.refresh();
+        return;
+      }
+
+      const result = registerSchema.safeParse({
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
+
+      if (!result.success) {
+        const fieldErrors = {};
+
+        result.error.issues.forEach((issue) => {
+          const fieldName = issue.path[0];
+          fieldErrors[fieldName] = issue.message;
+        });
+
+        setErrors(fieldErrors);
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           fullName: formData.fullName,
           email: formData.email,
           password: formData.password,
-          confirmPassword: formData.confirmPassword,
-        });
+        }),
+      });
 
-        if (!result.success) {
-          const fieldErrors = {};
-          result.error.issues.forEach((issue) => {
-            const fieldName = issue.path[0];
-            fieldErrors[fieldName] = issue.message;
-          });
-          setErrors(fieldErrors);
-          setLoading(false);
-          return;
-        }
+      const data = await res.json();
 
-        
-
-        toast.success("Register successful");
+      if (!res.ok) {
+        toast.error(data.message || "Register failed");
+        setLoading(false);
+        return;
       }
 
+      toast.success("Register successful");
       resetForm();
+      setIsLogin(true);
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
@@ -236,9 +277,7 @@ export default function LoginPage() {
                   }`}
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.password}
-                  </p>
+                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
                 )}
               </div>
 
@@ -298,8 +337,8 @@ export default function LoginPage() {
                     ? "Logging in..."
                     : "Registering..."
                   : isLogin
-                  ? "Login"
-                  : "Register"}
+                    ? "Login"
+                    : "Register"}
               </button>
             </form>
           </div>

@@ -1,4 +1,4 @@
-import Button from "../ui/components/Button/button";
+import Button from "@/app/ui/components/Button/button";
 import Input from "../ui/components/input/input";
 
 export default function MainBanner() {

@@ -8,7 +8,7 @@ import Button from "@/app/ui/components/Button/button";
 
 export default function ProductDetailsPage() {
   const params = useParams();
-  const slug = params?.slug;
+  const id = params?.id;
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,25 +16,40 @@ export default function ProductDetailsPage() {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    if (!slug) return;
+    console.log("params:", params);
+    console.log("id:", id);
 
-    fetch(`http://localhost:3001/products/${slug}`)
-      .then((res) => {
+    if (!id) return;
+
+    const getProduct = async () => {
+      try {
+        setLoading(true);
+
+        const url = `/api/products/${id}`;
+        console.log("fetching:", url);
+
+        const res = await fetch(url);
+
+        console.log("status:", res.status);
+
         if (!res.ok) {
-          throw new Error("Failed to fetch product");
+          throw new Error("Product not found");
         }
-        return res.json();
-      })
-      .then((data) => {
+
+        const data = await res.json();
+        console.log("data:", data);
+
         setProduct(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log("product fetch error:", err);
         setError("محصول پیدا نشد");
+      } finally {
         setLoading(false);
-      });
-  }, [slug]);
+      }
+    };
+
+    getProduct();
+  }, [id]);
 
   const increaseQty = () => setQuantity((prev) => prev + 1);
   const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -65,12 +80,16 @@ export default function ProductDetailsPage() {
     );
   }
 
-  if (error || !product) {
+  if (error) {
     return (
       <div className="container mx-auto py-10 px-4">
         <p className="text-red-500 text-lg">{error}</p>
       </div>
     );
+  }
+
+  if (!product) {
+    return null; // یا یه skeleton
   }
 
   return (
@@ -151,9 +170,7 @@ export default function ProductDetailsPage() {
             )}
           </div>
 
-          <p className="text-[#7E7E7E] leading-7 mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
+          <p className="text-[#7E7E7E] leading-7 mb-6">{product.description}</p>
 
           <div className="flex flex-wrap gap-3 mb-6 text-sm">
             <span className="text-[#7E7E7E]">

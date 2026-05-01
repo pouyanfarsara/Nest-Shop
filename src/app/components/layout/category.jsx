@@ -1,5 +1,6 @@
 import Button from "@/app/ui/components/Button/button";
 
+
 export default function Category() {
   return (
     <>

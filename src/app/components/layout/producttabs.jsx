@@ -1,11 +1,10 @@
 "use client";
 
-import Button from "@/app/ui/components/Button/button";
 import { ShoppingCart, Star } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import ProductCardSkeleton from "./Skeletonloading";
 import Link from "next/link";
-import productsData from "@/data/products.json";
+import Button from "@/app/ui/components/Button/button";
 
 export default function ProductTabs() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -14,14 +13,22 @@ export default function ProductTabs() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    try {
-      setProducts(productsData.products || []);
-    } catch (err) {
-      console.log("products load error:", err);
-      setError("مشکلی در دریافت محصولات پیش آمده");
-    } finally {
-      setLoading(false);
-    }
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) throw new Error("Failed to fetch products");
+
+        const data = await res.json();
+        setProducts(Array.isArray(data) ? data : data.products || []);
+      } catch (err) {
+        console.log("products load error:", err);
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const addToCart = (product) => {
@@ -33,74 +40,70 @@ export default function ProductTabs() {
         (item) => String(item.productId) === String(product.id)
       );
 
-      let updatedCart = [];
-
-      if (existingItem) {
-        updatedCart = cart.map((item) =>
-          String(item.productId) === String(product.id)
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        updatedCart = [
-          ...cart,
-          {
-            id: crypto.randomUUID(),
-            productId: String(product.id),
-            quantity: 1,
-          },
-        ];
-      }
+      const updatedCart = existingItem
+        ? cart.map((item) =>
+            String(item.productId) === String(product.id)
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [
+            ...cart,
+            {
+              id: crypto.randomUUID(),
+              productId: String(product.id),
+              quantity: 1,
+            },
+          ];
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      alert("محصول به سبد خرید اضافه شد");
+      alert("Product added to cart");
     } catch (error) {
       console.log("add to cart error:", error);
-      alert("خطا در اضافه کردن به سبد خرید");
+      alert("Failed to add product to cart");
     }
   };
 
+  const tabs = [
+    { id: "tab1", label: "All" },
+    { id: "tab2", label: "Baking Material" },
+    { id: "tab3", label: "Fresh Fruits" },
+    { id: "tab4", label: "Milks & Dairies" },
+    { id: "tab5", label: "Meats" },
+    { id: "tab6", label: "Seafood" },
+  ];
+
   const filteredProducts = useMemo(() => {
     if (activeTab === "tab1") return products;
-    if (activeTab === "tab2") {
-      return products.filter(
-        (product) => product.category === "Baking Material"
-      );
-    }
-    if (activeTab === "tab3") {
-      return products.filter((product) => product.category === "Fresh Fruit");
-    }
-    if (activeTab === "tab4") {
-      return products.filter((product) => product.category === "Dairy");
-    }
-    if (activeTab === "tab5") {
-      return products.filter((product) => product.category === "Meats");
-    }
-    if (activeTab === "tab6") {
-      return products.filter((product) => product.category === "Seafood");
-    }
-    return products;
+
+    const categories = {
+      tab2: "Baking Material",
+      tab3: "Fresh Fruit",
+      tab4: "Dairy",
+      tab5: "Meats",
+      tab6: "Seafood",
+    };
+
+    return products.filter(
+      (product) => product.category === categories[activeTab]
+    );
   }, [activeTab, products]);
 
   if (loading) {
     return (
-      <div className="tab">
-        <div className="block w-full md:flex pt-5 items-center justify-between">
-          <h5 className="font-semibold text-xl whitespace-nowrap">
+      <div className="w-full px-4 sm:px-5 lg:px-0">
+        <div className="flex flex-col gap-4 pt-5">
+          <h5 className="font-semibold text-xl text-[#253D4E]">
             Popular Products
           </h5>
 
-          <div className="tablist text-xs md:text-sm whitespace-nowrap flex gap-2.5 md:gap-5">
-            <span className="text-[#3BB77E]">All</span>
-            <span>Baking Material</span>
-            <span>Fresh Fruits</span>
-            <span>Milks & Dairies</span>
-            <span>Meats</span>
-            <span>Seafood</span>
+          <div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-2 text-sm">
+            {tabs.map((tab) => (
+              <span key={tab.id}>{tab.label}</span>
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 md:gap-3 pt-6 px-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 pt-6">
           {Array.from({ length: 10 }).map((_, index) => (
             <ProductCardSkeleton key={index} />
           ))}
@@ -114,135 +117,88 @@ export default function ProductTabs() {
   }
 
   return (
-    <div className="tab">
-      <div className="block w-full md:flex pt-5 items-center justify-between">
-        <h5 className="font-semibold text-xl whitespace-nowrap">
+    <div className="w-full px-4 sm:px-5 lg:px-0">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between pt-5">
+        <h5 className="font-semibold text-xl text-[#253D4E]">
           Popular Products
         </h5>
 
-        <div className="tablist text-xs md:text-sm whitespace-nowrap flex gap-2.5 md:gap-5">
-          <button
-            className={activeTab === "tab1" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab1")}
-          >
-            All
-          </button>
-
-          <button
-            className={activeTab === "tab2" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab2")}
-          >
-            Baking Material
-          </button>
-
-          <button
-            className={activeTab === "tab3" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab3")}
-          >
-            Fresh Fruits
-          </button>
-
-          <button
-            className={activeTab === "tab4" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab4")}
-          >
-            Milks & Dairies
-          </button>
-
-          <button
-            className={activeTab === "tab5" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab5")}
-          >
-            Meats
-          </button>
-
-          <button
-            className={activeTab === "tab6" ? "text-[#3BB77E]" : ""}
-            onClick={() => setActiveTab("tab6")}
-          >
-            Seafood
-          </button>
+        <div className="flex gap-3 overflow-x-auto whitespace-nowrap pb-2 md:pb-0 text-sm">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`shrink-0 rounded-full px-3 py-1.5 transition ${
+                activeTab === tab.id
+                  ? "bg-[#3BB77E] text-white font-semibold"
+                  : "bg-[#F3F5F7] text-[#253D4E]"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="content">
-        <div className="tabcontent flex flex-col justify-center items-center">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 md:gap-3 pt-6 px-2">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="relative border border-[#ECECEC] rounded-2xl flex flex-col py-5 px-3 overflow-hidden"
-              >
-                {product.discountPercent > 0 && (
-                  <div className="absolute top-0 left-0 bg-[#3BB77E] text-white text-[11px] px-3 py-1 rounded-br-2xl">
-                    {product.discountPercent}%
-                  </div>
-                )}
-
-                {product.badge && (
-                  <div className="absolute top-0 right-0 bg-[#3BB77E] text-white text-[11px] px-3 py-1 rounded-bl-2xl">
-                    {product.badge}
-                  </div>
-                )}
-
-                <div className="w-full min-h-25 pt-4">
-                  <Link href={`/products/${product.id}`}>
-                    <img
-                      src={product.image}
-                      className="w-full h-full object-cover cursor-pointer"
-                      alt={product.name}
-                    />
-                  </Link>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <span className="text-[#ADADAD] text-xs cursor-pointer">
-                    {product.category}
-                  </span>
-
-                  <h5 className="text-xs text-[#253D4E] font-semibold cursor-pointer">
-                    {product.name}
-                  </h5>
-
-                  <p className="text-[#B6B6B6] text-xs">By {product.brand}</p>
-
-                  <div className="flex items-center gap-[2px]">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Star
-                        key={index}
-                        size={13}
-                        className={
-                          index < product.rating
-                            ? "text-[#FDC040] fill-[#FDC040]"
-                            : "text-[#D4D4D4]"
-                        }
-                      />
-                    ))}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-                    <span className="text-[#3BB77E] text-sm cursor-pointer font-semibold">
-                      ${product.price}
-                    </span>
-
-                    {product.oldPrice && (
-                      <span className="text-[#ADADAD] text-sm line-through cursor-pointer">
-                        ${product.oldPrice}
-                      </span>
-                    )}
-
-                    <Button
-                      text="Add"
-                      icon={<ShoppingCart size={13} />}
-                      onClick={() => addToCart(product)}
-                      className="px-3 flex flex-row-reverse bg-[#DEF9EC] text-[#3BB77E] items-center justify-center text-sm cursor-pointer rounded-xs"
-                    />
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 pt-6">
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="group flex gap-4 sm:block border border-[#ECECEC] rounded-2xl p-3 sm:p-4 bg-white hover:shadow-lg transition-all duration-300"
+          >
+            <Link
+              href={`/products/${product.id}`}
+              className="shrink-0 w-32 sm:w-full"
+            >
+              <div className="bg-[#F7F8FA] rounded-2xl p-3 sm:p-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-28 sm:h-36 object-contain group-hover:scale-105 transition"
+                />
               </div>
-            ))}
+            </Link>
+
+            <div className="flex flex-1 flex-col min-w-0">
+              <span className="text-xs text-gray-400 truncate">
+                {product.category}
+              </span>
+
+              <Link href={`/products/${product.id}`}>
+                <h5 className="text-sm sm:text-[15px] font-semibold mt-1 line-clamp-2 text-[#253D4E] hover:text-[#3BB77E] transition">
+                  {product.name}
+                </h5>
+              </Link>
+
+              <div className="flex mt-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    size={13}
+                    className={
+                      i < product.rating
+                        ? "text-[#FDC040] fill-[#FDC040]"
+                        : "text-gray-300"
+                    }
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between gap-3 mt-auto pt-3">
+                <span className="text-[#3BB77E] font-bold text-base">
+                  ${product.price}
+                </span>
+
+                <Button
+                  text="Add"
+                  icon={<ShoppingCart size={20} />}
+                  onClick={() => addToCart(product)}
+                  className="flex cursor-pointer items-center gap-1.5 bg-[#DEF9EC] text-[#3BB77E] px-3 py-2 rounded-lg text-xs font-semibold hover:bg-[#3BB77E] hover:text-white transition"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

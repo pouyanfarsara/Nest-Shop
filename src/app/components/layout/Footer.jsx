@@ -122,7 +122,6 @@ export default function FooterTop() {
               </div>
             </div>
 
-           
             <div className="md:col-span-2">
               <h4 className="text-sm font-semibold text-gray-900">
                 Install App
@@ -132,7 +131,7 @@ export default function FooterTop() {
               </p>
 
               <div className="mt-4 flex  gap-2">
-                <div className="relative  w-[140px] h-[42px]">
+                <div className="relative cursor-pointer  w-[140px] h-[42px]">
                   <Image
                     src="/appstore.png"
                     alt="App Store"
@@ -140,7 +139,7 @@ export default function FooterTop() {
                     className="object-contain"
                   />
                 </div>
-                <div className="relative w-[140px] h-[42px]">
+                <div className=" cursor-pointer relative w-[140px] h-[42px]">
                   <Image
                     src="/googleplay.png"
                     alt="Google Play"

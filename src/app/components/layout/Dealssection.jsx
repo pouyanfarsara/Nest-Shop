@@ -8,7 +8,7 @@ export default function DealsSection() {
       brand: "Hamburger Hel",
       price: 21.0,
       oldPrice: 24.0,
-      image: "background1.png",
+      image: "/background1.png",
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ export default function DealsSection() {
       brand: "Hamburger Hel",
       price: 51.0,
       oldPrice: 55.0,
-      image: "background2.png",
+      image: "/background2.png",
     },
     {
       id: 3,
@@ -24,7 +24,7 @@ export default function DealsSection() {
       brand: "Hamburger Hel",
       price: 61.5,
       oldPrice: 66.0,
-      image: "background3.png",
+      image: "/background3.png",
     },
     {
       id: 4,
@@ -32,14 +32,13 @@ export default function DealsSection() {
       brand: "Totino’s Pizza",
       price: 52.8,
       oldPrice: 58.0,
-      image: "background4.png",
+      image: "/background4.png",
     },
   ];
 
   return (
     <>
       <div className="container w-full flex-col  justify-center items-center">
-        
         <section className="mt-14  w-full  md:w-4/5">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold text-[#253D4E]">
@@ -57,7 +56,6 @@ export default function DealsSection() {
                 key={item.id}
                 className="relative rounded-2xl overflow-hidden group"
               >
-              
                 <img
                   src={item.image}
                   alt={item.name}
