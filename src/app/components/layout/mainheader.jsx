@@ -23,7 +23,7 @@ export default function MainHeader() {
         <div className="logo">
           <Link href="/products">
             <img
-              src="/logo.png"
+              src="/Logo.png"
               alt="Nest Shop"
               className="w-32 sm:w-36 md:w-40 lg:w-44 max-h-12 object-contain"
             />
